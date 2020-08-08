@@ -1,43 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiPower } from 'react-icons/fi';
 import { FiTrash2 } from 'react-icons/fi';
 
-import api from '../../services/api';
 
 import './styles.css';
 
 import LogoImg from '../../assets/logo.svg';
 
 export default function Profile() {
-    const [incidents, setIncidents] = useState([]);
-    const ongId = localStorage.getItem('ongId');
-    const ongName = localStorage.getItem('ongName');
+
     const history = useHistory();
 
     useEffect(() => {
-       api.get('profile', {
-           headers: {
-               Authorization: ongId,
-           }
-       }).then(response => {
-           setIncidents(response.data);
-       })
-    }, [ongId]);
+       
+    }, []);
 
     async function handleDeleteIncident(id) {
-        try{
-          await api.delete(`incidents/${id}`, {
-              headers: {
-                  Authorization: ongId,
-              }
-          } );
-
-          setIncidents(incidents.filter(incident => incident.id !== id));
-
-        } catch(err){
-            alert('Erro ao deletar o caso, tente novamente.');
-        }
+  
     }
 
     function handleLogout(){
@@ -50,7 +30,7 @@ export default function Profile() {
        <div className="profile-container">
            <header>
             <img src={LogoImg} alt = "Be the hero"/>
-            <span>Bem Vindo{ongName}!</span>
+            <span>Bem Vindo!</span>
 
             <Link className="button" to="/incidents/new">
                 Cadastrar um novo caso
